@@ -74,7 +74,7 @@ async def _(event):
         # for good measure to make the scroll bars disappear
         im_png = driver.get_screenshot_as_png()
         # saves screenshot of entire page
-        await catevent.edit("`Stoppping Chrome Bin`")
+        await catevent.edit("`Stopping Chrome Bin`")
         driver.close()
         message_id = await reply_id(event)
         end = datetime.now()
