@@ -27,7 +27,7 @@ plugin_category = "utils"
     info={
         "header": "To Take a screenshot of a website.",
         "usage": "{tr}ss <link>",
-        "examples": "{tr}ss https://github.com/TgCatUB/catuserbot",
+        "examples": "{tr}ss https://github.com/denn319/catuserbot",
     },
 )
 async def _(event):

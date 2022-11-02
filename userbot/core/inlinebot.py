@@ -123,7 +123,7 @@ async def article_builder(event, method):
         query = "𝗗𝗲𝗽𝗹𝗼𝘆 𝘆𝗼𝘂𝗿 𝗼𝘄𝗻 𝗖𝗮𝘁𝗨𝘀𝗲𝗿𝗯𝗼𝘁."
         buttons = [
             (
-                Button.url("Source code", "https://github.com/TgCatUB/catuserbot"),
+                Button.url("Source code", "https://github.com/denn319/catuserbot"),
                 Button.url("Deploy", "https://github.com/TgCatUB/nekopack"),
             )
         ]
