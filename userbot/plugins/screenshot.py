@@ -82,7 +82,8 @@ async def _(event):
         hmm = f"**url : **{input_str} \n**Time :** `{ms} seconds`"
         await catevent.delete()
         with io.BytesIO(im_png) as out_file:
-            out_file.name = f"{input_str}.PNG"
+            # out_file.name = f"{input_str}.PNG"
+            out_file.name = "ss.png"
             await event.client.send_file(
                 event.chat_id,
                 out_file,
