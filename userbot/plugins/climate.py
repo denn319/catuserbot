@@ -45,7 +45,7 @@ def sun(unix, ctimezone):
 
 
 @catub.cat_cmd(
-    pattern="climate(?:\s|$)([\s\S]*)",
+    pattern="(climate|climatekh)(?:\s|$)([\s\S]*)",
     command=("climate", plugin_category),
     info={
         "header": "To get the weather report of a city.",
@@ -114,22 +114,43 @@ async def get_weather(event):  # sourcery no-metrics
     findir = dirs[funmath % len(dirs)]
     kmph = str(wind * 3.6).split(".")
     mph = str(wind * 2.237).split(".")
-    await edit_or_reply(
-        event,
-        f"🌡**Temperature:** `{celsius(curtemp)}°C | {fahrenheit(curtemp)}°F`\n"
-        + f"🥰**Human Feeling** `{celsius(feel)}°C | {fahrenheit(feel)}°F`\n"
-        + f"🥶**Min. Temp.:** `{celsius(min_temp)}°C | {fahrenheit(min_temp)}°F`\n"
-        + f"🥵**Max. Temp.:** `{celsius(max_temp)}°C | {fahrenheit(max_temp)}°F`\n"
-        + f"☁️**Humidity:** `{humidity}%`\n"
-        + f"🧧**Pressure** `{pressure} hPa`\n"
-        + f"🌬**ខ្យល់Wind:** `{kmph[0]} kmh | {mph[0]} mph, {findir}`\n"
-        + f"⛈**ពពកCloud:** `{cloud} %`\n"
-        + f"🌄**ថ្ងៃរះSunrise:** `{sun(sunrise,ctimezone)}`\n"
-        + f"🌅**ថ្ងៃលិចSunset:** `{sun(sunset,ctimezone)}`\n\n\n"
-        + f"**{desc}**\n"
-        + f"`{cityname}, {fullc_n}`\n"
-        + f"`{time}`\n",
-    )
+    
+    cmd = event.pattern_match.group(1)
+    if cmd == "climatekh":
+        await edit_or_reply(
+            event,
+            f"🌡**សីតុណ្ហភាព:** `{celsius(curtemp)}°C | {fahrenheit(curtemp)}°F`\n"
+            + f"🥰**អារម្មណ៍មនុស្ស** `{celsius(feel)}°C | {fahrenheit(feel)}°F`\n"
+            + f"🥶**អប្ប. សីតុណ្ហភាព.:** `{celsius(min_temp)}°C | {fahrenheit(min_temp)}°F`\n"
+            + f"🥵**អតិ. សីតុណ្ហភាព.:** `{celsius(max_temp)}°C | {fahrenheit(max_temp)}°F`\n"
+            + f"☁️**សំណើម:** `{humidity}%`\n"
+            + f"🧧**សម្ពាធ** `{pressure} hPa`\n"
+            + f"🌬**ខ្យល់:** `{kmph[0]} kmh | {mph[0]} mph, {findir}`\n"
+            + f"⛈**ពពគ:** `{cloud} %`\n"
+            + f"🌄**ថ្ងៃរះ:** `{sun(sunrise,ctimezone)}`\n"
+            + f"🌅**ថ្ងៃលិចSunset:** `{sun(sunset,ctimezone)}`\n\n\n"
+            + f"**{desc}**\n"
+            + f"`{cityname}, {fullc_n}`\n"
+            + f"`{time}`\n",
+        )
+    else:
+        # default climate command
+        await edit_or_reply(
+            event,
+            f"🌡**Temperature:** `{celsius(curtemp)}°C | {fahrenheit(curtemp)}°F`\n"
+            + f"🥰**Human Feeling** `{celsius(feel)}°C | {fahrenheit(feel)}°F`\n"
+            + f"🥶**Min. Temp.:** `{celsius(min_temp)}°C | {fahrenheit(min_temp)}°F`\n"
+            + f"🥵**Max. Temp.:** `{celsius(max_temp)}°C | {fahrenheit(max_temp)}°F`\n"
+            + f"☁️**Humidity:** `{humidity}%`\n"
+            + f"🧧**Pressure** `{pressure} hPa`\n"
+            + f"🌬**Wind:** `{kmph[0]} kmh | {mph[0]} mph, {findir}`\n"
+            + f"⛈**Cloud:** `{cloud} %`\n"
+            + f"🌄**Sunrise:** `{sun(sunrise,ctimezone)}`\n"
+            + f"🌅**Sunset:** `{sun(sunset,ctimezone)}`\n\n\n"
+            + f"**{desc}**\n"
+            + f"`{cityname}, {fullc_n}`\n"
+            + f"`{time}`\n",
+        )
 
 
 @catub.cat_cmd(
