@@ -52,6 +52,7 @@ def sun(unix, ctimezone):
         "description": "Shows you the weather report of a city. By default it is Phnom Penh, you can change it by {tr}setcity command.",
         "note": "For functioning of this plugin you need to set OPEN_WEATHER_MAP_APPID var you can  get value from https://openweathermap.org/",
         "usage": [
+            "{tr}climatekh",
             "{tr}climate",
             "{tr}climate <city name>",
         ],
@@ -119,16 +120,16 @@ async def get_weather(event):  # sourcery no-metrics
     if cmd == "climatekh":
         await edit_or_reply(
             event,
-            f"🌡**សីតុណ្ហភាព:** `{celsius(curtemp)}°C | {fahrenheit(curtemp)}°F`\n"
-            + f"🥰**អារម្មណ៍មនុស្ស** `{celsius(feel)}°C | {fahrenheit(feel)}°F`\n"
-            + f"🥶**អប្ប. សីតុណ្ហភាព.:** `{celsius(min_temp)}°C | {fahrenheit(min_temp)}°F`\n"
-            + f"🥵**អតិ. សីតុណ្ហភាព.:** `{celsius(max_temp)}°C | {fahrenheit(max_temp)}°F`\n"
+            f"🌡**សីតុណ្ហភាព:** `{celsius(curtemp)}°C`\n"
+            + f"🥰**អារម្មណ៍មនុស្ស** `{celsius(feel)}°C`\n"
+            + f"🥶**សីតុណ្ហ. អប្ប.:** `{celsius(min_temp)}°C`\n"
+            + f"🥵**សីតុណ្ហ. អតិ.:** `{celsius(max_temp)}°C`\n"
             + f"☁️**សំណើម:** `{humidity}%`\n"
             + f"🧧**សម្ពាធ** `{pressure} hPa`\n"
-            + f"🌬**ខ្យល់:** `{kmph[0]} kmh | {mph[0]} mph, {findir}`\n"
-            + f"⛈**ពពគ:** `{cloud} %`\n"
+            + f"🌬**ខ្យល់:** `{kmph[0]} kmh, {findir}`\n"
+            + f"⛈**ពពក:** `{cloud} %`\n"
             + f"🌄**ថ្ងៃរះ:** `{sun(sunrise,ctimezone)}`\n"
-            + f"🌅**ថ្ងៃលិចSunset:** `{sun(sunset,ctimezone)}`\n\n\n"
+            + f"🌅**ថ្ងៃលិច:** `{sun(sunset,ctimezone)}`\n\n\n"
             + f"**{desc}**\n"
             + f"`{cityname}, {fullc_n}`\n"
             + f"`{time}`\n",
