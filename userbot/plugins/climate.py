@@ -49,7 +49,7 @@ def sun(unix, ctimezone):
     command=("climate", plugin_category),
     info={
         "header": "To get the weather report of a city.",
-        "description": "Shows you the weather report of a city. By default it is Delhi, you can change it by {tr}setcity command.",
+        "description": "Shows you the weather report of a city. By default it is Phnom Penh, you can change it by {tr}setcity command.",
         "note": "For functioning of this plugin you need to set OPEN_WEATHER_MAP_APPID var you can  get value from https://openweathermap.org/",
         "usage": [
             "{tr}climate",
@@ -152,7 +152,7 @@ async def set_default_city(event):
             event, "`Get an API key from` https://openweathermap.org/ `first.`"
         )
     input_str = event.pattern_match.group(1)
-    CITY = input_str or gvarstatus("DEFCITY") or "Delhi"
+    CITY = input_str or gvarstatus("DEFCITY") or "Phnom Penh"
     timezone_countries = {
         timezone: country
         for country, timezones in c_tz.items()
@@ -186,7 +186,7 @@ async def set_default_city(event):
     command=("weather", plugin_category),
     info={
         "header": "To get the weather report of a city.",
-        "description": "Shows you the weather report of a city . By default it is Delhi, you can change it by {tr}setcity command.",
+        "description": "Shows you the weather report of a city . By default it is Phnom Penh, you can change it by {tr}setcity command.",
         "usage": [
             "{tr}weather",
             "{tr}weather <city name>",
@@ -197,7 +197,7 @@ async def _(event):
     "weather report today from 'wttr.in'"
     input_str = event.pattern_match.group(1)
     if not input_str:
-        input_str = gvarstatus("DEFCITY") or "Delhi"
+        input_str = gvarstatus("DEFCITY") or "Phnom Penh"
     output = requests.get(f"https://wttr.in/{input_str}?mnTC0&lang=en").text
     await edit_or_reply(event, output, parse_mode=_format.parse_pre)
 
@@ -207,7 +207,7 @@ async def _(event):
     command=("wttr", plugin_category),
     info={
         "header": "To get the weather report of a city.",
-        "description": "Shows you the weather report of a city for next 3 days . By default it is Delhi, you can change it by {tr}setcity command.",
+        "description": "Shows you the weather report of a city for next 3 days . By default it is Phnom Penh, you can change it by {tr}setcity command.",
         "usage": [
             "{tr}wttr",
             "{tr}wttr <city name>",
@@ -219,7 +219,7 @@ async def _(event):
     reply_to_id = await reply_id(event)
     input_str = event.pattern_match.group(1)
     if not input_str:
-        input_str = gvarstatus("DEFCITY") or "Delhi"
+        input_str = gvarstatus("DEFCITY") or "Phnom Penh"
     async with aiohttp.ClientSession() as session:
         sample_url = "https://wttr.in/{}.png"
         response_api_zero = await session.get(sample_url.format(input_str))
