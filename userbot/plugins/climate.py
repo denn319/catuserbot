@@ -186,7 +186,7 @@ async def set_default_city(event):
     command=("weather", plugin_category),
     info={
         "header": "To get the weather report of a city.",
-        "description": "Shows you the weather report of a city . By default it is Phnom Penh, you can change it by {tr}setcity command.",
+        "description": "Shows you the weather report of a city. By default it is Phnom Penh, you can change it by {tr}setcity command.",
         "usage": [
             "{tr}weather",
             "{tr}weather <city name>",
@@ -207,7 +207,7 @@ async def _(event):
     command=("wttr", plugin_category),
     info={
         "header": "To get the weather report of a city.",
-        "description": "Shows you the weather report of a city for next 3 days . By default it is Phnom Penh, you can change it by {tr}setcity command.",
+        "description": "Shows you the weather report of a city for next 3 days. By default it is Phnom Penh, you can change it by {tr}setcity command.",
         "usage": [
             "{tr}wttr",
             "{tr}wttr <city name>",
