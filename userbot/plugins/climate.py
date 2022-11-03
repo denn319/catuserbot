@@ -65,7 +65,7 @@ async def get_weather(event):  # sourcery no-metrics
             event, "`Get an API key from` https://openweathermap.org/ `first.`"
         )
     input_str = "".join(event.text.split(maxsplit=1)[1:])
-    CITY = input_str or gvarstatus("DEFCITY") or "Delhi"
+    CITY = input_str or gvarstatus("DEFCITY") or "Phnom Penh"
     timezone_countries = {
         timezone: country
         for country, timezones in c_tz.items()
