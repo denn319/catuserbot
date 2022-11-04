@@ -29,19 +29,22 @@ plugin_category = "utils"
     pattern="(ss|gis|gw) ([\s\S]*)",
     command=("ss", plugin_category),
     info={
-        "header": "To Take a screenshot of a website. User .gw weather snapshot",
+        "header": "To take a screenshot of a website or get a weather snapshot from Google",
+        "description": "It opens a broswer silently, takes a screenshot, and returns a png file.",
         "usage": [
             "{tr}ss <link>",
+            "{tr}gis <query>",
             "{tr}gw <City name>",
         ],
         "examples": [
             "{tr}ss https://github.com/denn319/catuserbot",
-            "{tr}gw Phnom Penh | gw Phnom Penh Wind | gw Phnom Penh precipitation",
+            "{tr}gis cat",
+            "{tr}gw Phnom Penh [wind | precipitation]",
         ],
     },
 )
 async def _(event):
-    "To Take a screenshot of a website."
+    "To take a screenshot of a website."
     if Config.CHROME_BIN is None:
         return await edit_or_reply(
             event, "Need to install Google Chrome. Module Stopping."
