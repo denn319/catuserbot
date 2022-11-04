@@ -104,9 +104,8 @@ async def _(event):
             right = location['x'] + size['width']
             bottom = location['y'] + size['height']
 
-            im = im.crop((left, top, right, bottom)) # defines crop points
-            im.save('gis2.png') # saves new cropped image
-            im_png = im
+            im_png = im.crop((left, top, right, bottom)) # defines crop points
+            im_png.save('gis2.png') # saves new cropped image
             
         else:
             im_png = driver.get_screenshot_as_png()
