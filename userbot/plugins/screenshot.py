@@ -43,6 +43,7 @@ async def _(event):
     catevent = await edit_or_reply(event, "`Processing ...`")
     start = datetime.now()
     try:
+        cmd = event.pattern_match.group(1)
         chrome_options = webdriver.ChromeOptions()
         if cmd == "ss" or cmd == "gis":
             chrome_options.add_argument("--ignore-certificate-errors")
@@ -54,7 +55,6 @@ async def _(event):
         chrome_options.binary_location = Config.CHROME_BIN
         await event.edit("`Starting Google Chrome BIN`")
         driver = webdriver.Chrome(chrome_options=chrome_options)
-        cmd = event.pattern_match.group(1)
         input_str = event.pattern_match.group(2)
         inputstr = input_str
         if cmd == "ss":
