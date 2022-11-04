@@ -81,7 +81,7 @@ async def _(event):
         # start
         # google.com weather+phnom penh
         if cmd == "gis2":
-            inputstr = f"https://www.google.com/search?q=weather+phnom+penh"
+            inputstr = f"https://www.google.com/search?q={input_str}"
             driver.get(inputstr)
             await catevent.edit("`Calculating Page Dimensions`")
         
