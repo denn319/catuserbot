@@ -44,12 +44,13 @@ async def _(event):
     start = datetime.now()
     try:
         chrome_options = webdriver.ChromeOptions()
-        chrome_options.add_argument("--ignore-certificate-errors")
-        chrome_options.add_argument("--test-type")
-        chrome_options.add_argument("--headless")
-        # https://stackoverflow.com/a/53073789/4723940
-        chrome_options.add_argument("--no-sandbox")
-        chrome_options.add_argument("--disable-dev-shm-usage")
+        if cmd == "ss" or cmd == "gis":
+            chrome_options.add_argument("--ignore-certificate-errors")
+            chrome_options.add_argument("--test-type")
+            chrome_options.add_argument("--headless")
+            # https://stackoverflow.com/a/53073789/4723940
+            chrome_options.add_argument("--no-sandbox")
+            chrome_options.add_argument("--disable-dev-shm-usage")
         chrome_options.binary_location = Config.CHROME_BIN
         await event.edit("`Starting Google Chrome BIN`")
         driver = webdriver.Chrome(chrome_options=chrome_options)
