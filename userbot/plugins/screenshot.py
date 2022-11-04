@@ -98,10 +98,8 @@ async def _(event):
             im_png = im.crop((left, top, right, bottom)) # defines crop points
             #im.save('gis2.png') # saves new cropped image
             
-        else:
-            im_png = driver.get_screenshot_as_png()
-            # saves screenshot of entire page
-
+        im_png = driver.get_screenshot_as_png()
+        # saves screenshot of entire page
         await catevent.edit("`Stopping Chrome Bin`")
         driver.close()
         message_id = await reply_id(event)
