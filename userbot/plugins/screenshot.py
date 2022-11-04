@@ -81,7 +81,7 @@ async def _(event):
         # google.com weather+phnom penh
         if cmd == "gis2":
             # find part of the page we want image of
-            element = driver.find_element(By.ID, 'wob_wc')
+            element = driver.find_element('By.ID', 'wob_wc')
             location = element.location
             size = element.size
             
