@@ -104,8 +104,10 @@ async def _(event):
             right = location['x'] + size['width']
             bottom = location['y'] + size['height']
 
-            im_png = im.crop((left, top, right, bottom)) # defines crop points
-            im_png = im_png.tobytes("xbm", "rgb")
+            cim = im.crop((left, top, right, bottom)) # defines crop points
+            cim_bytes = io.BytesIO()
+            cim.save(cim_bytes, format="png")
+            im_png = cim_bytes.getvalue()
             
         else:
             im_png = driver.get_screenshot_as_png()
