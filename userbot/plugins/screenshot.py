@@ -30,7 +30,7 @@ plugin_category = "utils"
     command=("ss", plugin_category),
     info={
         "header": "To take a screenshot of a website or get a weather snapshot from Google.",
-        "description": "It opens a broswer silently, takes a screenshot, and returns a png file.",
+        "description": "It runs the query and returns the screenshot",
         "usage": [
             "{tr}ss <link>",
             "{tr}gis <query>",
@@ -130,30 +130,17 @@ async def _(event):
         hmm = f"**url : **{input_str} \n**Time :** `{ms} seconds`"
         await catevent.delete()
         
-        #send photo instead of file
-        if cmd == "gw":
-            with io.BytesIO(im_png) as out_file:
-                out_file.name = f"{cmd}.png"
-                await event.client.send_file(
-                    event.chat_id,
-                    out_file,
-                    caption=hmm,
-                    reply_to=message_id,
-                    allow_cache=False,
-                    silent=True,
-                )
-        else:
-            with io.BytesIO(im_png) as out_file:
-                out_file.name = f"{cmd}.png"
-                await event.client.send_file(
-                    event.chat_id,
-                    out_file,
-                    caption=hmm,
-                    force_document=True,
-                    reply_to=message_id,
-                    allow_cache=False,
-                    silent=True,
-                )
+        with io.BytesIO(im_png) as out_file:
+            out_file.name = f"{cmd}.png"
+            await event.client.send_file(
+                event.chat_id,
+                out_file,
+                caption=hmm,
+                # force_document=True, #do NOT send as file
+                reply_to=message_id,
+                allow_cache=False,
+                silent=True,
+            )
     except Exception:
         await catevent.edit(f"`{traceback.format_exc()}`")
 
