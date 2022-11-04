@@ -54,9 +54,11 @@ async def _(event):
         chrome_options.binary_location = Config.CHROME_BIN
         await event.edit("`Starting Google Chrome BIN`")
         driver = webdriver.Chrome(chrome_options=chrome_options)
+        
         cmd = event.pattern_match.group(1)
         input_str = event.pattern_match.group(2)
         inputstr = input_str
+        
         if cmd == "ss":
             caturl = url(inputstr)
             if not caturl:
@@ -66,17 +68,19 @@ async def _(event):
                 return await catevent.edit("`The given input is not supported url`")
         if cmd == "gis":
             inputstr = f"https://www.google.com/search?q={input_str}"
-        driver.get(inputstr)
-        await catevent.edit("`Calculating Page Dimensions`")
-        height = driver.execute_script(
-            "return Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);"
-        )
-        width = driver.execute_script(
-            "return Math.max(document.body.scrollWidth, document.body.offsetWidth, document.documentElement.clientWidth, document.documentElement.scrollWidth, document.documentElement.offsetWidth);"
-        )
-        driver.set_window_size(width + 100, height + 100)
-        # Add some pixels on top of the calculated dimensions
-        # for good measure to make the scroll bars disappear
+        
+        if cmd == "ss" or cmd == "gis":    
+            driver.get(inputstr)
+            await catevent.edit("`Calculating Page Dimensions`")
+            height = driver.execute_script(
+                "return Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);"
+            )
+            width = driver.execute_script(
+                "return Math.max(document.body.scrollWidth, document.body.offsetWidth, document.documentElement.clientWidth, document.documentElement.scrollWidth, document.documentElement.offsetWidth);"
+            )
+            driver.set_window_size(width + 100, height + 100)
+            # Add some pixels on top of the calculated dimensions
+            # for good measure to make the scroll bars disappear
         
         # denn319 test get weather out from google.com
         # start
