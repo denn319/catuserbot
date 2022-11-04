@@ -83,16 +83,18 @@ async def _(event):
         # google.com weather+phnom penh
         if cmd == "gis2":
             inputstr = f"https://www.google.com/search?q={input_str}"
-            driver.get(inputstr)
+            ff = webdriver.Firefox()
+            ff.get(inputstr)
+            
             await catevent.edit("`Calculating Page Dimensions`")
         
             # find part of the page we want image of
-            element = driver.find_element(By.ID, 'wob_wc')
+            element = ff.find_element(By.ID, 'wob_wc')
             location = element.location
             size = element.size
             
             # saves screenshot of entire page
-            png = driver.get_screenshot_as_png()
+            png = ff.get_screenshot_as_png()
             
             im = Image.open(io.BytesIO(png)) # uses PIL library to open image in memory
 
@@ -101,8 +103,10 @@ async def _(event):
             right = location['x'] + size['width']
             bottom = location['y'] + size['height']
 
-            im_png = im.crop((left, top, right, bottom)) # defines crop points
-            # im_png = im_png.save('gis2.png') # saves new cropped image
+            im = im.crop((left, top, right, bottom)) # defines crop points
+            im.save('gis2.png') # saves new cropped image
+            im_png = im
+            
         else:
             im_png = driver.get_screenshot_as_png()
             # saves screenshot of entire page
