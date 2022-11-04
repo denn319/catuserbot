@@ -26,12 +26,18 @@ plugin_category = "utils"
 
 
 @catub.cat_cmd(
-    pattern="(ss|gis|gis2) ([\s\S]*)",
+    pattern="(ss|gis|gw) ([\s\S]*)",
     command=("ss", plugin_category),
     info={
-        "header": "To Take a screenshot of a website.",
-        "usage": "{tr}ss <link>",
-        "examples": "{tr}ss https://github.com/denn319/catuserbot",
+        "header": "To Take a screenshot of a website. User .gw weather snapshot",
+        "usage": [
+            "{tr}ss <link>",
+            "{tr}gw <City name>",
+        ],
+        "examples": [
+            "{tr}ss https://github.com/denn319/catuserbot",
+            "{tr}gw Phnom Penh | gw Phnom Penh Wind | gw Phnom Penh precipitation",
+        ],
     },
 )
 async def _(event):
@@ -68,8 +74,8 @@ async def _(event):
                 return await catevent.edit("`The given input is not supported url`")
         if cmd == "gis":
             inputstr = f"https://www.google.com/search?q={input_str}"
-        if cmd == "gis2":
-            inputstr = f"https://www.google.com/search?q={input_str}"
+        if cmd == "gw":
+            inputstr = f"https://www.google.com/search?q=weather+{input_str}"
         
         driver.get(inputstr)
         await catevent.edit("`Calculating Page Dimensions`")
@@ -88,7 +94,7 @@ async def _(event):
         # denn319 test get weather out from google.com
         # start
         # google.com weather+phnom penh
-        if cmd == "gis2":
+        if cmd == "gw":
       
             # find part of the page we want image of
             element = driver.find_element(By.ID, 'wob_wc')
