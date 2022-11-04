@@ -43,7 +43,7 @@ async def _(event):
     catevent = await edit_or_reply(event, "`Processing ...`")
     start = datetime.now()
     try:
-
+        
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument("--ignore-certificate-errors")
         chrome_options.add_argument("--test-type")
@@ -68,10 +68,13 @@ async def _(event):
                 return await catevent.edit("`The given input is not supported url`")
         if cmd == "gis":
             inputstr = f"https://www.google.com/search?q={input_str}"
+        if cmd == "gis2":
+            inputstr = f"https://www.google.com/search?q={input_str}"
         
-        if cmd == "ss" or cmd == "gis":    
-            driver.get(inputstr)
-            await catevent.edit("`Calculating Page Dimensions`")
+        driver.get(inputstr)
+        await catevent.edit("`Calculating Page Dimensions`")
+            
+        if cmd == "ss" or cmd == "gis":                
             height = driver.execute_script(
                 "return Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);"
             )
@@ -86,18 +89,14 @@ async def _(event):
         # start
         # google.com weather+phnom penh
         if cmd == "gis2":
-            inputstr = f"https://www.google.com/search?q={input_str}"
-            ff = webdriver.Firefox()
-            ff.get(inputstr)
-            
-            await catevent.edit("`Calculating Page Dimensions`")
+      
             # find part of the page we want image of
-            element = ff.find_element(By.ID, 'wob_wc')
+            element = driver.find_element(By.ID, 'wob_wc')
             location = element.location
             size = element.size
             # saves screenshot of entire page
-            png = ff.get_screenshot_as_png()
-            ff.quit()
+            png = driver.get_screenshot_as_png()
+
             im = Image.open(io.BytesIO(png)) # uses PIL library to open image in memory
             
             left = location['x']
