@@ -95,11 +95,9 @@ async def _(event):
             # for good measure to make the scroll bars disappear
         
         # denn319 test get weather out from google.com
-        # start
-        # google.com weather+phnom penh
         if cmd == "gw":
       
-            # find part of the page we want image of
+            # find part of the page we want image from an element id
             element = driver.find_element(By.ID, 'wob_wc')
             location = element.location
             size = element.size
@@ -108,10 +106,10 @@ async def _(event):
 
             im = Image.open(io.BytesIO(png)) # uses PIL library to open image in memory
             
-            left = location['x']
-            top = location['y']
-            right = location['x'] + size['width']
-            bottom = location['y'] + size['height']
+            left = location['x'] - 10
+            top = location['y'] - 10
+            right = location['x'] + size['width'] + 10
+            bottom = location['y'] + size['height'] + 10
 
             cim = im.crop((left, top, right, bottom)) # defines crop points
             cim_bytes = io.BytesIO()
@@ -140,12 +138,6 @@ async def _(event):
                 reply_to=message_id,
                 allow_cache=False,
                 silent=True,
-            )
-            
-        if cmd == "gw":
-            await event.client.send_message(
-                event.chat_id,
-                f".climatekh",
             )
     except Exception:
         await catevent.edit(f"`{traceback.format_exc()}`")
