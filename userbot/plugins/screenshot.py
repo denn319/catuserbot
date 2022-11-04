@@ -18,11 +18,14 @@ from ..Config import Config
 from ..core.managers import edit_or_reply
 from . import reply_id
 
+# denn319
+from PIL import Image
+
 plugin_category = "utils"
 
 
 @catub.cat_cmd(
-    pattern="(ss|gis) ([\s\S]*)",
+    pattern="(ss|gis|gis2) ([\s\S]*)",
     command=("ss", plugin_category),
     info={
         "header": "To Take a screenshot of a website.",
@@ -72,8 +75,33 @@ async def _(event):
         driver.set_window_size(width + 100, height + 100)
         # Add some pixels on top of the calculated dimensions
         # for good measure to make the scroll bars disappear
-        im_png = driver.get_screenshot_as_png()
-        # saves screenshot of entire page
+        
+        # denn319 test get weather out from google.com
+        # start
+        # google.com weather+phnom penh
+        if cmd == "gis2":
+            # find part of the page we want image of
+            element = driver.find_element(By.ID, 'wob_wc')
+            location = element.location
+            size = element.size
+            
+            # saves screenshot of entire page
+            png = driver.get_screenshot_as_png()
+            
+            im = Image.open(io.BytesIO(png)) # uses PIL library to open image in memory
+
+            left = location['x']
+            top = location['y']
+            right = location['x'] + size['width']
+            bottom = location['y'] + size['height']
+
+            im_png = im.crop((left, top, right, bottom)) # defines crop points
+            #im.save('gis2.png') # saves new cropped image
+            
+        else:
+            im_png = driver.get_screenshot_as_png()
+            # saves screenshot of entire page
+
         await catevent.edit("`Stopping Chrome Bin`")
         driver.close()
         message_id = await reply_id(event)
