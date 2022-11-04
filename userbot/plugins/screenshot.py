@@ -43,18 +43,18 @@ async def _(event):
     catevent = await edit_or_reply(event, "`Processing ...`")
     start = datetime.now()
     try:
-        cmd = event.pattern_match.group(1)
+
         chrome_options = webdriver.ChromeOptions()
-        if cmd == "ss" or cmd == "gis":
-            chrome_options.add_argument("--ignore-certificate-errors")
-            chrome_options.add_argument("--test-type")
-            chrome_options.add_argument("--headless")
-            # https://stackoverflow.com/a/53073789/4723940
-            chrome_options.add_argument("--no-sandbox")
-            chrome_options.add_argument("--disable-dev-shm-usage")
+        chrome_options.add_argument("--ignore-certificate-errors")
+        chrome_options.add_argument("--test-type")
+        chrome_options.add_argument("--headless")
+        # https://stackoverflow.com/a/53073789/4723940
+        chrome_options.add_argument("--no-sandbox")
+        chrome_options.add_argument("--disable-dev-shm-usage")
         chrome_options.binary_location = Config.CHROME_BIN
         await event.edit("`Starting Google Chrome BIN`")
         driver = webdriver.Chrome(chrome_options=chrome_options)
+        cmd = event.pattern_match.group(1)
         input_str = event.pattern_match.group(2)
         inputstr = input_str
         if cmd == "ss":
@@ -87,17 +87,15 @@ async def _(event):
             ff.get(inputstr)
             
             await catevent.edit("`Calculating Page Dimensions`")
-        
             # find part of the page we want image of
             element = ff.find_element(By.ID, 'wob_wc')
             location = element.location
             size = element.size
-            
             # saves screenshot of entire page
             png = ff.get_screenshot_as_png()
-            
+            ff.quit()
             im = Image.open(io.BytesIO(png)) # uses PIL library to open image in memory
-
+            
             left = location['x']
             top = location['y']
             right = location['x'] + size['width']
