@@ -29,7 +29,7 @@ plugin_category = "utils"
     pattern="(ss|gis|gw) ([\s\S]*)",
     command=("ss", plugin_category),
     info={
-        "header": "To take a screenshot of a website or get a weather snapshot from Google",
+        "header": "To take a screenshot of a website or get a weather snapshot from Google.",
         "description": "It opens a broswer silently, takes a screenshot, and returns a png file.",
         "usage": [
             "{tr}ss <link>",
