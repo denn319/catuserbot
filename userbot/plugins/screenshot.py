@@ -129,17 +129,31 @@ async def _(event):
         ms = (end - start).seconds
         hmm = f"**url : **{input_str} \n**Time :** `{ms} seconds`"
         await catevent.delete()
-        with io.BytesIO(im_png) as out_file:
-            out_file.name = f"{cmd}.png"
-            await event.client.send_file(
-                event.chat_id,
-                out_file,
-                caption=hmm,
-                force_document=True,
-                reply_to=message_id,
-                allow_cache=False,
-                silent=True,
-            )
+        
+        #send photo instead of file
+        if cmd == "gw":
+            with io.BytesIO(im_png) as out_file:
+                out_file.name = f"{cmd}.png"
+                await event.client.send_file(
+                    event.chat_id,
+                    out_file,
+                    caption=hmm,
+                    reply_to=message_id,
+                    allow_cache=False,
+                    silent=True,
+                )
+        else:
+            with io.BytesIO(im_png) as out_file:
+                out_file.name = f"{cmd}.png"
+                await event.client.send_file(
+                    event.chat_id,
+                    out_file,
+                    caption=hmm,
+                    force_document=True,
+                    reply_to=message_id,
+                    allow_cache=False,
+                    silent=True,
+                )
     except Exception:
         await catevent.edit(f"`{traceback.format_exc()}`")
 
