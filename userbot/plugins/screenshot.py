@@ -141,6 +141,12 @@ async def _(event):
                 allow_cache=False,
                 silent=True,
             )
+            
+        if cmd == "gw":
+            await event.client.send_message(
+                event.chat_id,
+                f".climatekh",
+            )
     except Exception:
         await catevent.edit(f"`{traceback.format_exc()}`")
 
