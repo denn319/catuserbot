@@ -105,7 +105,7 @@ async def _(event):
             bottom = location['y'] + size['height']
 
             im_png = im.crop((left, top, right, bottom)) # defines crop points
-            im_png = im_png.tobytes()
+            im_png = im_png.tobytes("xbm", "rgb")
             
         else:
             im_png = driver.get_screenshot_as_png()
