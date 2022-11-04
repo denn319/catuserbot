@@ -19,6 +19,7 @@ from ..core.managers import edit_or_reply
 from . import reply_id
 
 # denn319
+from selenium.webdriver.common.by import By
 from PIL import Image
 
 plugin_category = "utils"
@@ -62,7 +63,7 @@ async def _(event):
                 caturl = url(inputstr)
             if not caturl:
                 return await catevent.edit("`The given input is not supported url`")
-        if cmd == "gis" or cmd == "gis2":
+        if cmd == "gis":
             inputstr = f"https://www.google.com/search?q={input_str}"
         driver.get(inputstr)
         await catevent.edit("`Calculating Page Dimensions`")
@@ -81,7 +82,7 @@ async def _(event):
         # google.com weather+phnom penh
         if cmd == "gis2":
             # find part of the page we want image of
-            element = driver.find_element('By.ID', 'wob_wc')
+            element = driver.find_element(By.ID, 'wob_wc')
             location = element.location
             size = element.size
             
