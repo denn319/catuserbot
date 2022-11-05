@@ -125,7 +125,7 @@ async def _(event):
         message_id = await reply_id(event)
         end = datetime.now()
         ms = (end - start).seconds
-        hmm = f"**url : **{cmd} \n**Time :** `{ms} seconds`"
+        hmm = f"**cmd : **{cmd} \n**Time :** `{ms} seconds`"
         await catevent.delete()
         
         with io.BytesIO(im_png) as out_file:
