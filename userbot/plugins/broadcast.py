@@ -34,7 +34,7 @@ async def autopost_func(event):
     if no_of_sources == 0:
         return
     sources = sql.get_chat_broadcastlist(keyword_src)
-    reply = event.get_chat()
+    reply = await event.get_chat()
     if reply not in sources:
         return
 
