@@ -53,8 +53,11 @@ def sun(unix, ctimezone):
         "note": "For functioning of this plugin you need to set OPEN_WEATHER_MAP_APPID var you can  get value from https://openweathermap.org/",
         "usage": [
             "{tr}climatekh",
-            "{tr}climate",
             "{tr}climate <city name>",
+        ],
+        "examples": [
+            "{tr}climatekh",
+            "{tr}climatekh Siem Reap",
         ],
     },
 )
