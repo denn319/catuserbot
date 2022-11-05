@@ -55,6 +55,7 @@ async def autopost_func(event):
     # if no_of_chats == 0:
     #     return
     chats = sql.get_chat_broadcastlist(keyword)
+    await event.client.send_message(BOTLOG_CHATID, f"{chats}")
     with contextlib.suppress(BaseException):
         await event.client(group_)
     i = 0
