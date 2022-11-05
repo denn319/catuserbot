@@ -35,12 +35,8 @@ async def autopost_func(event):
     if no_of_sources == 0:
         return
     sources = sql.get_chat_broadcastlist(keyword_src)
-
-    source_valid = False
-    for s in sources:
-        if int(event.chat_id) == int(s):
-            source_valid = True
-    if not source_valid:
+    gc = event.get_chat()
+    if PeerChannel(gc) not in sources:
         return
 
     # get destination
