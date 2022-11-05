@@ -36,9 +36,8 @@ async def autopost_func(event):
         return
     sources = sql.get_chat_broadcastlist(keyword_src)
 
-    for s in sources:
-        if int(event.chat_id) == int(s):
-            continue
+    if int(event.chat_id) not in sources:
+        return
 
     # get destination
     cat = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
