@@ -35,11 +35,12 @@ async def autopost_func(event):
         return
     sources = sql.get_chat_broadcastlist(keyword_src)
     reply = await event.get_chat()
-    await event.client.send_message(
-        BOTLOG_CHATID,
-        f"Reply is {reply} chats in category {sources}",
-        parse_mode=_format.parse_pre,
-    )
+    if BOTLOG:
+        await event.client.send_message(
+            BOTLOG_CHATID,
+            f"Reply is {int(reply)} chats in category {sources}",
+            parse_mode=_format.parse_pre,
+        )
     if reply not in sources:
         return
 
