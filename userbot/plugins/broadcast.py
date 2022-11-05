@@ -68,7 +68,7 @@ async def autopost_func(event):
             LOGS.info(str(e))
         await sleep(0.5)
     resultext = f"`The message was sent to {i} chats out of {no_of_chats} chats in category {keyword}.`"
-    await edit_delete(catevent, resultext)
+    await edit_delete(BOTLOG_CHATID, resultext)
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID,
