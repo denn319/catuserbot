@@ -37,13 +37,14 @@ async def autopost_func(event):
     sources = sql.get_chat_broadcastlist(keyword_src)
     chat = await event.get_chat()
 
-    if int(event.chat_id) not in sources:
+    for s in sources:
+        if int(event.chat_id) == int(s):
+            continue
         await event.client.send_message(
             BOTLOG_CHATID,
             f"Chat: {int(event.chat_id)} in category: {sources}",
             parse_mode=_format.parse_pre,
         )
-        return
 
     # get destination
     cat = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
