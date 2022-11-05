@@ -38,14 +38,12 @@ async def autopost_func(event):
     chat = await event.get_chat()
 
     if int(event.chat_id) not in sources:
-        return
-
-    if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID,
-            f"Chat: {chat} in category: {sources}",
+            f"Chat: {int(event.chat_id)} in category: {sources}",
             parse_mode=_format.parse_pre,
         )
+        return
 
     # get destination
     cat = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
@@ -69,6 +67,7 @@ async def autopost_func(event):
         await sleep(0.5)
     resultext = f"`The message was sent to {i} chats out of {no_of_chats} chats in category {keyword}.`"
     await edit_delete(BOTLOG_CHATID, resultext)
+
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID,
