@@ -35,8 +35,8 @@ async def autopost_func(event):
         return
     sources = sql.get_chat_broadcastlist(keyword_src)
     reply = await event.get_chat()
-    # if reply not in sources:
-    #     return
+    if reply not in sources:
+        return
 
     # get destination
     cat = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
