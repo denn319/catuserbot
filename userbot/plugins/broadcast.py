@@ -14,6 +14,7 @@ from . import BOTLOG, BOTLOG_CHATID
 
 from telethon import events
 from ..Config import Config
+from telethon.tl.types import PeerUser, PeerChat, PeerChannel
 
 plugin_category = "tools"
 
@@ -35,13 +36,17 @@ async def autopost_func(event):
         return
     sources = sql.get_chat_broadcastlist(keyword_src)
     chat = await event.get_chat()
+
+    channel_id = await event.client.get_entity(PeerChannel(int(chat)))
+
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID,
             f"Reply is {chat.id} chats in category {sources}",
             parse_mode=_format.parse_pre,
         )
-    if chat.id not in sources:
+
+    if channel_id not in sources:
         return
 
     # get destination
@@ -52,11 +57,6 @@ async def autopost_func(event):
     if no_of_chats == 0:
         return
     chats = sql.get_chat_broadcastlist(keyword)
-    # catevent = await edit_or_reply(
-    #     event,
-    #     "sending this message to all groups in the category",
-    #     parse_mode=_format.parse_pre,
-    # )
     with contextlib.suppress(BaseException):
         await event.client(group_)
     i = 0
