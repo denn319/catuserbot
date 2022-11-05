@@ -37,16 +37,14 @@ async def autopost_func(event):
     sources = sql.get_chat_broadcastlist(keyword_src)
     chat = await event.get_chat()
 
-    channel_id = await event.client.get_entity(PeerChannel(int(chat)))
-
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID,
-            f"Reply is {channel_id} chats in category {sources}",
+            f"Reply is {int(event.chat_id)} chats in category {sources}",
             parse_mode=_format.parse_pre,
         )
 
-    if channel_id not in sources:
+    if int(event.chat_id) not in sources:
         return
 
     # get destination
