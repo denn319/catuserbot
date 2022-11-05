@@ -34,14 +34,14 @@ async def autopost_func(event):
     if no_of_sources == 0:
         return
     sources = sql.get_chat_broadcastlist(keyword_src)
-    reply = await event.get_chat()
+    chat = await event.get_chat()
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID,
-            f"Reply is {int(reply)} chats in category {sources}",
+            f"Reply is {chat.id} chats in category {sources}",
             parse_mode=_format.parse_pre,
         )
-    if reply not in sources:
+    if chat.id not in sources:
         return
 
     # get destination
@@ -60,11 +60,11 @@ async def autopost_func(event):
     with contextlib.suppress(BaseException):
         await event.client(group_)
     i = 0
-    for chat in chats:
+    for x in chats:
         try:
-            if int(event.chat_id) == int(chat):
+            if int(event.chat_id) == int(x):
                 continue
-            await event.client.send_message(int(chat), reply)
+            await event.client.send_message(int(x), chat)
             i += 1
         except Exception as e:
             LOGS.info(str(e))
