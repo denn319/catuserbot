@@ -52,8 +52,8 @@ async def autopost_func(event):
     keyword = "all"
     no_of_chats = sql.num_broadcastlist_chat(keyword)
     group_ = Get(cat)
-    if no_of_chats == 0:
-        return
+    # if no_of_chats == 0:
+    #     return
     chats = sql.get_chat_broadcastlist(keyword)
     with contextlib.suppress(BaseException):
         await event.client(group_)
