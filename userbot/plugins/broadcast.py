@@ -36,7 +36,11 @@ async def autopost_func(event):
         return
     sources = sql.get_chat_broadcastlist(keyword_src)
 
-    if int(event.chat_id) not in sources:
+    source_valid = False
+    for s in sources:
+        if int(event.chat_id) == int(s):
+            source_valid = True
+    if not source_valid:
         return
 
     # get destination
