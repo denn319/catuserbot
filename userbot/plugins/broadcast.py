@@ -35,8 +35,8 @@ async def autopost_func(event):
         return
     sources = sql.get_chat_broadcastlist(keyword_src)
     reply = await event.get_chat()
-    if reply not in sources:
-        return
+    # if reply not in sources:
+    #     return
 
     # get destination
     cat = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
@@ -46,11 +46,11 @@ async def autopost_func(event):
     if no_of_chats == 0:
         return
     chats = sql.get_chat_broadcastlist(keyword)
-    catevent = await edit_or_reply(
-        event,
-        "sending this message to all groups in the category",
-        parse_mode=_format.parse_pre,
-    )
+    # catevent = await edit_or_reply(
+    #     event,
+    #     "sending this message to all groups in the category",
+    #     parse_mode=_format.parse_pre,
+    # )
     with contextlib.suppress(BaseException):
         await event.client(group_)
     i = 0
