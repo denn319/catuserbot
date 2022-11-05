@@ -40,12 +40,9 @@ async def autopost_func(event):
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID,
-            f"Reply is {int(event.chat_id)} chats in category {sources}",
+            f"Chat: {chat} in category: {sources}",
             parse_mode=_format.parse_pre,
         )
-
-    if event.chat_id not in sources:
-        return
 
     # get destination
     cat = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
