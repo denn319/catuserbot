@@ -10,20 +10,21 @@ from ..core.logger import logging
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers.utils import _format, get_user_from_event
 from ..sql_helper import broadcast_sql as sql
-from . import BOTLOG, BOTLOG_CHATID, AUTOPOST
+from . import BOTLOG, BOTLOG_CHATID
 
 from telethon import events
+from ..Config import Config
 
 plugin_category = "tools"
 
 LOGS = logging.getLogger(__name__)
 
+
 async def autopost_func(event):
-    "Auto forward the message to all chats in the 'all' destination category."
-    if not AUTOPOST:
+    """Auto-forward the message to all chats in the 'all' destination category."""
+    if Config.AUTOPOST is None:
         return
-    autopost_key = bool(AUTOPOST and (AUTOPOST.lower() != "false"))
-    if not autopost_key:
+    if not bool(Config.AUTOPOST and (Config.AUTOPOST.lower() != "false")):
         return
 
     # get source channels
@@ -513,7 +514,6 @@ async def catbroadcast_delete(event):
         )
 
 # check if AUTOPOST config is set
-if AUTOPOST:
-    autopost_key = bool(AUTOPOST and (AUTOPOST.lower() != "false"))
-    if autopost_key:
+if Config.AUTOPOST:
+    if bool(Config.AUTOPOST and (Config.AUTOPOST.lower() != "false")):
         catub.add_event_handler(autopost_func, events.NewMessage())
