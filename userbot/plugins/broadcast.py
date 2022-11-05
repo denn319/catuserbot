@@ -42,7 +42,7 @@ async def autopost_func(event):
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID,
-            f"Reply is {chat.id} chats in category {sources}",
+            f"Reply is {channel_id} chats in category {sources}",
             parse_mode=_format.parse_pre,
         )
 
