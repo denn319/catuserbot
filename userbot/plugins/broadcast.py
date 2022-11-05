@@ -44,7 +44,7 @@ async def autopost_func(event):
             parse_mode=_format.parse_pre,
         )
 
-    if int(event.chat_id) not in sources:
+    if event.chat_id not in sources:
         return
 
     # get destination
@@ -55,7 +55,6 @@ async def autopost_func(event):
     # if no_of_chats == 0:
     #     return
     chats = sql.get_chat_broadcastlist(keyword)
-    await event.client.send_message(BOTLOG_CHATID, f"{chats}")
     with contextlib.suppress(BaseException):
         await event.client(group_)
     i = 0
