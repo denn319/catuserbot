@@ -169,18 +169,19 @@ async def catbroadcast_add(event):
     pattern="addtoc(?:\s|$)([\s\S]*)",
     command=("addtoc", plugin_category),
     info={
-        "header": "Add a given chat to the mentioned category",
+        "header": "Add a given chat to a mentioned category",
+        "description": "You do not need to be in that group/channel to add it into a category.",
         "usage": "{tr}addtoc <category name> <chat id>",
         "examples": "{tr}addtoc test -100123456",
     },
 )
 async def catbroadcast_addtoc(event):
-    "To add the chat to the mentioned category"
+    "Add a given chat to a mentioned category"
     catinput_str = event.pattern_match.group(1)
     if not catinput_str:
         return await edit_delete(
             event,
-            "In which category should i add this chat",
+            "In which category should I add this chat?",
             parse_mode=_format.parse_pre,
         )
     args = catinput_str.split(" ")
@@ -222,7 +223,7 @@ async def catbroadcast_addtoc(event):
         try:
             await event.client.send_message(
                 BOTLOG_CHATID,
-                f"The Chat {get_display_name(await event.get_chat())} is added to category {keyword}",
+                f"The Chat {get_display_name(groupid)} is added to category {keyword}",
                 parse_mode=_format.parse_pre,
             )
         except Exception:
