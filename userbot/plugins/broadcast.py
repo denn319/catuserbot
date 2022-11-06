@@ -59,8 +59,8 @@ async def autopost_func(event):
                 continue
 
             @catub.on(events.Album)
-            async def handler(se):
-                se.forward_to(int(d), event.message)
+            async def albumHandler(se):
+                se.forward_to(int(d))
 
             # await event.client.send_message(int(d), event.message)
             i += 1
