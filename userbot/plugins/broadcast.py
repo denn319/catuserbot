@@ -414,8 +414,7 @@ async def catbroadcast_send(event):
         try:
             if int(event.chat_id) == int(chat):
                 continue
-            # await event.client.forward_messages(int(chat), reply)
-            await event.client.forward_to(int(chat), reply)
+            await event.client.forward_messages(int(chat), reply)
             i += 1
         except Exception as e:
             LOGS.info(str(e))
