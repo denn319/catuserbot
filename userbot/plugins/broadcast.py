@@ -57,7 +57,13 @@ async def autopost_func(event):
         try:
             if int(event.chat_id) == int(d):
                 continue
-            await event.client.send_message(int(d), event.message)
+
+            catub.on(events.Album)
+
+            async def handler(e):
+                e.forward_to(int(d), event.message)
+
+            # await event.client.send_message(int(d), event.message)
             i += 1
         except Exception as e:
             LOGS.info(str(e))
