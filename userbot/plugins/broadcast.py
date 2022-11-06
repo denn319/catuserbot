@@ -58,10 +58,9 @@ async def autopost_func(event):
             if int(event.chat_id) == int(d):
                 continue
 
-            catub.on(events.Album)
-
-            async def handler(e):
-                e.forward_to(int(d), event.message)
+            @catub.on(events.Album)
+            async def handler(se):
+                se.forward_to(int(d), event.message)
 
             # await event.client.send_message(int(d), event.message)
             i += 1
@@ -169,6 +168,7 @@ async def catbroadcast_add(event):
                 parse_mode=_format.parse_pre,
             )
 
+
 @catub.cat_cmd(
     pattern="addtoc(?:\s|$)([\s\S]*)",
     command=("addtoc", plugin_category),
@@ -236,6 +236,7 @@ async def catbroadcast_addtoc(event):
                 f"The user {chat.first_name} is added to category {keyword}",
                 parse_mode=_format.parse_pre,
             )
+
 
 @catub.cat_cmd(
     pattern="list(?:\s|$)([\s\S]*)",
@@ -584,6 +585,7 @@ async def catbroadcast_delete(event):
             str(e),
             parse_mode=_format.parse_pre,
         )
+
 
 # check if AUTOPOST config is set
 if Config.AUTOPOST:
