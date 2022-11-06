@@ -165,6 +165,72 @@ async def catbroadcast_add(event):
                 parse_mode=_format.parse_pre,
             )
 
+@catub.cat_cmd(
+    pattern="addtoc(?:\s|$)([\s\S]*)",
+    command=("addtoc", plugin_category),
+    info={
+        "header": "Add a given chat to the mentioned category",
+        "usage": "{tr}addtoc <category name> <chat id>",
+        "examples": "{tr}addtoc test -100123456",
+    },
+)
+async def catbroadcast_addtoc(event):
+    "To add the chat to the mentioned category"
+    catinput_str = event.pattern_match.group(1)
+    if not catinput_str:
+        return await edit_delete(
+            event,
+            "In which category should i add this chat",
+            parse_mode=_format.parse_pre,
+        )
+    args = catinput_str.split(" ")
+    if len(args) != 2:
+        return await edit_delete(
+            event,
+            "Use proper syntax as shown .addtoc category_name groupid",
+            parse_mode=_format.parse_pre,
+        )
+    try:
+        groupid = int(args[0])
+        keyword = args[1].lower()
+    except ValueError:
+        try:
+            groupid = int(args[1])
+            keyword = args[0].lower()
+        except ValueError:
+            return await edit_delete(
+                event,
+                "Use proper syntax as shown .addtoc category_name groupid",
+                parse_mode=_format.parse_pre,
+            )
+    keyword = keyword.lower()
+    check = sql.is_in_broadcastlist(keyword, groupid)
+    if check:
+        return await edit_delete(
+            event,
+            f"This chat is already in this category {keyword}",
+            parse_mode=_format.parse_pre,
+        )
+    sql.add_to_broadcastlist(keyword, groupid)
+    await edit_delete(
+        event,
+        f"This chat {groupid} is now added to category {keyword}",
+        parse_mode=_format.parse_pre,
+    )
+    chat = await event.get_chat()
+    if BOTLOG:
+        try:
+            await event.client.send_message(
+                BOTLOG_CHATID,
+                f"The Chat {get_display_name(await event.get_chat())} is added to category {keyword}",
+                parse_mode=_format.parse_pre,
+            )
+        except Exception:
+            await event.client.send_message(
+                BOTLOG_CHATID,
+                f"The user {chat.first_name} is added to category {keyword}",
+                parse_mode=_format.parse_pre,
+            )
 
 @catub.cat_cmd(
     pattern="list(?:\s|$)([\s\S]*)",
