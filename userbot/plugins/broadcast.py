@@ -14,7 +14,6 @@ from . import BOTLOG, BOTLOG_CHATID
 
 from telethon import events
 from ..Config import Config
-from telethon.tl.types import PeerUser, PeerChat, PeerChannel
 
 plugin_category = "tools"
 
@@ -73,7 +72,6 @@ async def autopost_func(event):
             parse_mode=_format.parse_pre,
         )
 
-    ###
 
 @catub.cat_cmd(
     pattern="msgto(?:\s|$)([\s\S]*)",
@@ -416,7 +414,8 @@ async def catbroadcast_send(event):
         try:
             if int(event.chat_id) == int(chat):
                 continue
-            await event.client.forward_messages(int(chat), reply)
+            # await event.client.forward_messages(int(chat), reply)
+            await event.client.forward_to(int(chat), reply)
             i += 1
         except Exception as e:
             LOGS.info(str(e))
