@@ -3,7 +3,7 @@ import contextlib
 from asyncio import sleep
 
 from telethon.tl.functions.messages import ImportChatInviteRequest as Get
-from telethon.utils import get_display_name
+from telethon.utils import *
 
 from .. import catub
 from ..core.logger import logging
