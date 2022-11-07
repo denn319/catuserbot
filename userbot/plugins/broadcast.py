@@ -24,7 +24,7 @@ msg_album = None
 
 @catub.on(events.Album)
 async def handler(event):
-    # global msg_album
+    global msg_album
     msg_album = event
 
 
@@ -61,15 +61,14 @@ async def autopost_func(event):
     with contextlib.suppress(BaseException):
         await event.client(group_)
     i = 0
-    if msg_album:
-        msg = msg_album
-    else:
-        msg = event.message
     for d in chats:
         try:
             if int(event.chat_id) == int(d):
-                continue
-            await event.client.send_message(int(d), msg)
+                # continue
+                if msg_album:
+                    msg_album.forward_to(int(d))
+                else:
+                    await event.client.send_message(int(d), event.message)
             i += 1
         except Exception as e:
             LOGS.info(str(e))
