@@ -19,7 +19,7 @@ plugin_category = "tools"
 LOGS = logging.getLogger(__name__)
 
 
-async def autopost(event):
+async def autopost_func(event):
     """Auto-forward the message to all chats in the 'all' destination category."""
 
     # get source channels
@@ -29,7 +29,6 @@ async def autopost(event):
     if no_of_sources == 0:
         return
     sources = sql.get_chat_broadcastlist(keyword_src)
-
     source_valid = False
     for s in sources:
         if int(event.chat_id) == int(s):
@@ -68,4 +67,4 @@ async def autopost(event):
 # check if AUTOPOST config is set
 if Config.AUTOPOST:
     if bool(Config.AUTOPOST and (Config.AUTOPOST.lower() != "false")):
-        catub.add_event_handler(autopost)
+        catub.add_event_handler(autopost_func)
