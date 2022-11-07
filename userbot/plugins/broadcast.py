@@ -57,14 +57,11 @@ async def autopost_func(event):
         try:
             if int(event.chat_id) == int(d):
                 continue
-
             await event.client.send_message(int(d), event.message)
             i += 1
         except Exception as e:
             LOGS.info(str(e))
         await sleep(0.5)
-    resultext = f"`The message was sent to {i} chats out of {no_of_chats} chats in category {keyword}.`"
-    await edit_delete(BOTLOG_CHATID, resultext)
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID,
