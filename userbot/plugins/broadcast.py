@@ -19,14 +19,6 @@ plugin_category = "tools"
 
 LOGS = logging.getLogger(__name__)
 
-msg_album = None
-
-
-@catub.on(events.Album)
-async def handler(event):
-    global msg_album
-    msg_album = event
-
 
 async def autopost_func(event):
     """Auto-forward the message to all chats in the 'all' destination category."""
@@ -64,11 +56,13 @@ async def autopost_func(event):
     for d in chats:
         try:
             if int(event.chat_id) == int(d):
-                # continue
-                if msg_album:
-                    msg_album.forward_to(int(d))
-                else:
-                    await event.client.send_message(int(d), event.message)
+                continue
+
+            @catub.on(events.Album)
+            async def handler(sube):
+                sube.foward_to(int(d))
+
+            await event.client.send_message(int(d), event.message)
             i += 1
         except Exception as e:
             LOGS.info(str(e))
