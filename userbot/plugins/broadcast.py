@@ -12,63 +12,10 @@ from ..helpers.utils import _format, get_user_from_event
 from ..sql_helper import broadcast_sql as sql
 from . import BOTLOG, BOTLOG_CHATID
 
-from . import channel_autopost as mg
-from telethon import events
-from ..Config import Config
 
 plugin_category = "tools"
 
 LOGS = logging.getLogger(__name__)
-
-
-async def autopost_func(event):
-    """Auto-forward the message to all chats in the 'all' destination category."""
-    if Config.AUTOPOST is None:
-        return
-    if not bool(Config.AUTOPOST and (Config.AUTOPOST.lower() != "false")):
-        return
-
-    # get source channels
-    # load channels from the 'source' category
-    keyword_src = "source"
-    no_of_sources = sql.num_broadcastlist_chat(keyword_src)
-    if no_of_sources == 0:
-        return
-    sources = sql.get_chat_broadcastlist(keyword_src)
-
-    source_valid = False
-    for s in sources:
-        if int(event.chat_id) == int(s):
-            source_valid = True
-    if not source_valid:
-        return
-
-    # get destination
-    cat = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
-    keyword = "all"
-    no_of_chats = sql.num_broadcastlist_chat(keyword)
-    group_ = Get(cat)
-    # if no_of_chats == 0:
-    #     return
-    chats = sql.get_chat_broadcastlist(keyword)
-    with contextlib.suppress(BaseException):
-        await event.client(group_)
-    i = 0
-    for d in chats:
-        try:
-            if int(event.chat_id) == int(d):
-                continue
-            await event.client.send_message(int(d), event.message)
-            i += 1
-        except Exception as e:
-            LOGS.info(str(e))
-        await sleep(0.5)
-    if BOTLOG:
-        await event.client.send_message(
-            BOTLOG_CHATID,
-            f"A message is sent to {i} chats out of {no_of_chats} chats in category {keyword}",
-            parse_mode=_format.parse_pre,
-        )
 
 
 @catub.cat_cmd(
@@ -578,9 +525,3 @@ async def catbroadcast_delete(event):
             str(e),
             parse_mode=_format.parse_pre,
         )
-
-
-# check if AUTOPOST config is set
-if Config.AUTOPOST:
-    if bool(Config.AUTOPOST and (Config.AUTOPOST.lower() != "false")):
-        catub.add_event_handler(autopost_func, events.NewMessage())

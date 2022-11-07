@@ -1,4 +1,21 @@
-#https://github.com/Poolitzer/channelforwarder
+import base64
+import contextlib
+from asyncio import sleep
+
+from telethon.tl.functions.messages import ImportChatInviteRequest as Get
+from telethon.utils import get_display_name
+
+from .. import catub
+from ..core.logger import logging
+from ..core.managers import edit_delete, edit_or_reply
+from ..helpers.utils import _format, get_user_from_event
+from ..sql_helper import broadcast_sql as sql
+from . import BOTLOG, BOTLOG_CHATID
+
+from telethon import events
+from ..Config import Config
+
+# https://github.com/Poolitzer/channelforwarder
 
 from typing import TypedDict, List, Literal, cast
 
@@ -6,10 +23,18 @@ from telegram import Update, InputMediaVideo, InputMediaPhoto, InputMediaDocumen
 from telegram.ext import Updater, MessageHandler, Filters, CallbackContext, Defaults, PicklePersistence
 from telegram.utils.helpers import effective_message_type
 
-GROUP_ID = -100
-CHANNEL_ID = -100
+plugin_category = "tools"
+
+LOGS = logging.getLogger(__name__)
+
 MEDIA_GROUP_TYPES = {"audio": InputMediaAudio, "document": InputMediaDocument, "photo": InputMediaPhoto,
                      "video": InputMediaVideo}
+
+GROUP_ID = -1001818986606
+CHANNEL_ID = -1001890495163
+
+SRC_CHANNEL_CAT = "source"  # must exist using .broadcast command
+DST_CHANNEL_CAT = "all"  # must exist duing .broadcast command
 
 
 class MsgDict(TypedDict):
@@ -51,6 +76,13 @@ def new_post(update: Update, context: CallbackContext):
     context.bot.pin_chat_message(chat_id=GROUP_ID, message_id=msg.message_id)
     context.bot_data["messages"][message.message_id] = msg.message_id
 
+    if BOTLOG:
+        await context.bot.send_message(
+            BOTLOG_CHATID,
+            f"A message is sent",
+            parse_mode=_format.parse_pre,
+        )
+
 
 def edited_post(update: Update, context: CallbackContext):
     message = update.effective_message
@@ -81,7 +113,7 @@ def del_msg(update: Update, context: CallbackContext):
 def poll_msg():
     pers = PicklePersistence("persistence")
     defaults = Defaults(parse_mode="HTML", disable_notification=True)
-    updater = Updater("BOTTOKEN", defaults=defaults, persistence=pers)
+    updater = Updater(Config.TG_BOT_TOKEN, defaults=defaults, persistence=pers)
     dp = updater.dispatcher
     dp.add_handler(MessageHandler(Filters.update.channel_post & Filters.chat(CHANNEL_ID), new_post))
     dp.add_handler(MessageHandler(Filters.update.edited_channel_post & Filters.chat(CHANNEL_ID), edited_post))
@@ -91,5 +123,56 @@ def poll_msg():
     updater.start_polling()
     updater.idle()
 
-# if __name__ == "__main__":
-#     main()
+
+async def autopost(event):
+    """Auto-forward the message to all chats in the 'all' destination category."""
+
+    # get source channels
+    # load channels from the 'source' category
+    ###
+    # keyword_src = "source"
+    # no_of_sources = sql.num_broadcastlist_chat(keyword_src)
+    # if no_of_sources == 0:
+    #     return
+    # sources = sql.get_chat_broadcastlist(keyword_src)
+    #
+    # source_valid = False
+    # for s in sources:
+    #     if int(event.chat_id) == int(s):
+    #         source_valid = True
+    # if not source_valid:
+    #     return
+    #
+    # # get destination
+    # keyword = "all"
+    # no_of_chats = sql.num_broadcastlist_chat(keyword)
+    # # if no_of_chats == 0:
+    # #     return
+    # chats = sql.get_chat_broadcastlist(keyword)
+    # i = 0
+    # for d in chats:
+    #     try:
+    #         if int(event.chat_id) == int(d):
+    #             continue
+    #
+    #         await event.client.send_message(int(d), event.message)
+    #
+    #         i += 1
+    #     except Exception as e:
+    #         LOGS.info(str(e))
+    #     await sleep(0.5)
+    ###
+
+
+    # if BOTLOG:
+    #     await event.client.send_message(
+    #         BOTLOG_CHATID,
+    #         f"A message is sent to {i} chats out of {no_of_chats} chats in category {keyword}",
+    #         parse_mode=_format.parse_pre,
+    #     )
+
+
+# check if AUTOPOST config is set
+if Config.AUTOPOST:
+    if bool(Config.AUTOPOST and (Config.AUTOPOST.lower() != "false")):
+        catub.add_event_handler(MessageHandler(Filters.update.channel_post & Filters.chat(CHANNEL_ID), new_post))
