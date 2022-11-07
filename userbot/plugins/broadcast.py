@@ -24,14 +24,8 @@ msg_album = None
 
 @catub.on(events.Album)
 async def handler(event):
-    global msg_album
-    msg_album = event.message
-    if BOTLOG:
-        await event.client.send_message(
-            BOTLOG_CHATID,
-            f"Album handler: {msg_album}",
-            parse_mode=_format.parse_pre,
-        )
+    # global msg_album
+    msg_album = event
 
 
 async def autopost_func(event):
