@@ -53,14 +53,15 @@ async def autopost_func(event):
     with contextlib.suppress(BaseException):
         await event.client(group_)
     i = 0
+
+    @catub.on(events.Album)
+    async def handler(sube):
+        sube.forward_messages(int(d))
+
     for d in chats:
         try:
             if int(event.chat_id) == int(d):
                 continue
-
-            @catub.on(events.Album)
-            async def handler(sube):
-                sube.foward_to(int(d))
 
             await event.client.send_message(int(d), event.message)
             i += 1
