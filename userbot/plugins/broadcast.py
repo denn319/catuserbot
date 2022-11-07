@@ -21,6 +21,7 @@ LOGS = logging.getLogger(__name__)
 
 msg_album = None
 
+
 @catub.on(events.Album)
 async def handler(event):
     global msg_album
@@ -74,7 +75,7 @@ async def autopost_func(event):
         try:
             if int(event.chat_id) == int(d):
                 continue
-            await event.client.forward_to(int(d), msg)
+            await event.client.send_message(int(d), msg)
             i += 1
         except Exception as e:
             LOGS.info(str(e))
