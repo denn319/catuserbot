@@ -124,8 +124,8 @@ def poll_msg():
     updater.idle()
 
 
-async def autopost(event):
-    """Auto-forward the message to all chats in the 'all' destination category."""
+# async def autopost(event):
+#     """Auto-forward the message to all chats in the 'all' destination category."""
 
     # get source channels
     # load channels from the 'source' category
