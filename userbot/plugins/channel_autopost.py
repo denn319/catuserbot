@@ -76,13 +76,6 @@ def new_post(update: Update, context: CallbackContext):
     context.bot.pin_chat_message(chat_id=GROUP_ID, message_id=msg.message_id)
     context.bot_data["messages"][message.message_id] = msg.message_id
 
-    if BOTLOG:
-        await context.bot.send_message(
-            BOTLOG_CHATID,
-            f"A message is sent",
-            parse_mode=_format.parse_pre,
-        )
-
 
 def edited_post(update: Update, context: CallbackContext):
     message = update.effective_message
