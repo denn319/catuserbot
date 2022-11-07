@@ -56,7 +56,8 @@ async def autopost_func(event):
 
     @catub.on(events.Album)
     async def handler(sube):
-        sube.forward_messages(int(d))
+        LOGS.info(str(sube))
+        await sube.forward_messages(int(d))
 
     for d in chats:
         try:
