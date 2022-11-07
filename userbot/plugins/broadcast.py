@@ -24,7 +24,7 @@ msg_album = None
 
 @catub.on(events.Album)
 async def handler(event):
-    global msg_album
+    # global msg_album
     msg_album = event
 
 
