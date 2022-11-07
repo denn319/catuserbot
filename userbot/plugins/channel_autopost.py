@@ -40,8 +40,8 @@ async def autopost(event):
     # get destination
     keyword = "all"
     no_of_chats = sql.num_broadcastlist_chat(keyword)
-    # if no_of_chats == 0:
-    #     return
+    if no_of_chats == 0:
+        return
     chats = sql.get_chat_broadcastlist(keyword)
     i = 0
     for d in chats:
@@ -49,7 +49,7 @@ async def autopost(event):
             if int(event.chat_id) == int(d):
                 continue
 
-            await event.client.send_message(int(d), event.message)
+            await catub.send_message(int(d), event.message)
 
             i += 1
         except Exception as e:
@@ -58,7 +58,7 @@ async def autopost(event):
     ##
 
     if BOTLOG:
-        await event.client.send_message(
+        await catub.send_message(
             BOTLOG_CHATID,
             f"A message is sent to {i} chats out of {no_of_chats} chats in category {keyword}",
             parse_mode=_format.parse_pre,
