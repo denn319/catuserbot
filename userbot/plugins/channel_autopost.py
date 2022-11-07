@@ -1,4 +1,4 @@
-#https://github.com/Poolitzer/channelforwarder/blob/589104b8a808199ba46d620736bd8bea1dc187d9/main.py#L19-L46
+#https://github.com/Poolitzer/channelforwarder
 
 from typing import TypedDict, List, Literal, cast
 
