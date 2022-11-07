@@ -19,7 +19,7 @@ plugin_category = "tools"
 
 LOGS = logging.getLogger(__name__)
 
-msg_album = ""
+msg_album = None
 
 @catub.on(events.Album)
 async def handler(event):
