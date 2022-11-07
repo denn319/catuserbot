@@ -12,6 +12,7 @@ from ..helpers.utils import _format, get_user_from_event
 from ..sql_helper import broadcast_sql as sql
 from . import BOTLOG, BOTLOG_CHATID
 
+from ..helpers import mediagroup
 from telethon import events
 from ..Config import Config
 

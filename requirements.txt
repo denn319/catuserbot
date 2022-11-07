@@ -12,7 +12,7 @@ google-auth-httplib2
 google-auth-oauthlib
 gtts
 hachoir
-heroku3
+heroku3~=5.1.4
 html-telegraph-poster
 httpx[http2]
 humanize
@@ -35,9 +35,9 @@ pymediainfo
 PyMuPDF
 pySmartDL
 python-barcode
-pytz
+pytz~=2022.6
 qrcode
-requests
+requests~=2.28.1
 search-engine-parser
 selenium
 setuptools
@@ -50,7 +50,7 @@ telegraph
 tgcrypto
 ujson
 urlextract
-validators
+validators~=0.20.0
 vcsi
 wand
 wget
@@ -60,3 +60,7 @@ git+https://github.com/LonamiWebs/Telethon@v1
 git+https://github.com/goldsmith/Wikipedia
 git+https://github.com/sandy1709/py-googletrans
 git+https://github.com/alexmercerind/youtube-search-python
+
+urllib3~=1.26.12
+telegram
+python-telegram-bot==13.1.0
