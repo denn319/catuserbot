@@ -19,13 +19,16 @@ plugin_category = "tools"
 
 LOGS = logging.getLogger(__name__)
 
+SRC_CHANNEL_CAT = "source"  # can be any name. must exist using the .broadcast plug-in add command
+DST_CHANNEL_CAT = "all"  # can be any name. must exist using the .broadcast plug-in add command
 
-async def autopost_func(event):
+
+async def autopost(event):
     """Auto-forward the message to all chats in the 'all' destination category."""
 
     # get source channels
     # load channels from the 'source' category
-    keyword_src = "source"
+    keyword_src = SRC_CHANNEL_CAT
     no_of_sources = sql.num_broadcastlist_chat(keyword_src)
     if no_of_sources == 0:
         return
@@ -38,7 +41,7 @@ async def autopost_func(event):
         return
 
     # get destination
-    keyword = "all"
+    keyword = DST_CHANNEL_CAT
     no_of_chats = sql.num_broadcastlist_chat(keyword)
     if no_of_chats == 0:
         return
@@ -66,4 +69,4 @@ async def autopost_func(event):
 # check if AUTOPOST config is set
 if Config.AUTOPOST:
     if bool(Config.AUTOPOST and (Config.AUTOPOST.lower() != "false")):
-        catub.add_event_handler(autopost_func, events.NewMessage())
+        catub.add_event_handler(autopost, events.NewMessage())
