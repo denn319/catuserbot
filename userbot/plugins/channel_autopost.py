@@ -30,7 +30,7 @@ async def autopost_func(event):
         return
     sources = sql.get_chat_broadcastlist(keyword_src)
 
-    msg = await get_peer_id(event)
+    msg = await event.get_reply_message()
     LOGS.info(f"{msg}")
     LOGS.info(f"{event}")
 
