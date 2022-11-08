@@ -32,7 +32,6 @@ async def autopost_func(event):
 
     LOGS.info(f"{sources}")
     LOGS.info(f"{event}")
-    LOGS.info(f"{event.chat_id}")
 
     source_valid = False
     for s in sources:
