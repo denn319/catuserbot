@@ -30,9 +30,6 @@ async def autopost_func(event):
     if no_of_sources == 0:
         return
     sources = sql.get_chat_broadcastlist(keyword_src)
-
-    LOGS.info(f"Event: {event.message}")
-
     source_valid = False
     for s in sources:
         if int(event.chat_id) == int(s):
