@@ -32,8 +32,8 @@ async def autopost_func(event):
     sources = sql.get_chat_broadcastlist(keyword_src)
 
     msg = await event.get_reply_message()
-    LOGS.info(f"{msg}")
-    LOGS.info(f"{event}")
+    LOGS.info(f"Message: {msg}")
+    LOGS.info(f"Event: {event}")
 
     source_valid = False
     # for s in sources:
