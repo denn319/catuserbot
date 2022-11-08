@@ -62,5 +62,3 @@ git+https://github.com/sandy1709/py-googletrans
 git+https://github.com/alexmercerind/youtube-search-python
 
 urllib3~=1.26.12
-telegram
-python-telegram-bot==13.1.0
