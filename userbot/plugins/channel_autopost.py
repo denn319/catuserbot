@@ -30,7 +30,8 @@ async def autopost_func(event):
         return
     sources = sql.get_chat_broadcastlist(keyword_src)
 
-    LOGS.info(f"{sources}")
+    msg = await get_peer(event)
+    LOGS.info(f"{msg}")
     LOGS.info(f"{event}")
 
     source_valid = False
