@@ -22,6 +22,22 @@ LOGS = logging.getLogger(__name__)
 SRC_CHANNEL_CAT = "source"  # can be any name. must exist using the .broadcast plug-in add command
 DST_CHANNEL_CAT = "all"  # can be any name. must exist using the .broadcast plug-in add command
 
+# def file_handler (update, context):
+
+#     if update.message['photo'] == []:
+#         fileID = update.message['document']['file_id']
+#         fileName = update.message['document']['file_name']
+#         context.bot.sendDocument(chat_id = channel_chat_id,
+#                                  caption = 'image caption',
+#                                  document = fileID)
+
+#     else:
+#         fileID = update.message['photo'][-1]['file_id']
+#         context.bot.sendPhoto(chat_id = channel_chat_id,
+#                               caption = 'image caption',
+#                               photo = fileID)
+
+
 
 async def autopost(event):
     """Auto-forward the message to all chats in the 'all' destination category."""
