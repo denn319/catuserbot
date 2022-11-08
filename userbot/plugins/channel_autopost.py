@@ -51,7 +51,7 @@ async def autopost_func(event):
         try:
             if int(event.chat_id) == int(d):
                 continue
-            await catub.forward_messages(int(d), event.message)
+            await catub.send_message(int(d), event.message)
             i += 1
         except Exception as e:
             LOGS.info(str(e))
