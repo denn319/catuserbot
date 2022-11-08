@@ -36,10 +36,10 @@ async def autopost_func(event):
     LOGS.info(f"Event: {event}")
 
     source_valid = False
-    # for s in sources:
-    #     if int(event.chat_id) == int(s):
-    #         source_valid = True
-    if not sources:  #source_valid:
+    for s in sources:
+        if int(event.chat_id) == int(s):
+            source_valid = True
+    if not source_valid:
         return
 
     # get destination
@@ -73,4 +73,4 @@ async def autopost_func(event):
 # check if AUTOPOST config is set
 if Config.AUTOPOST:
     if bool(Config.AUTOPOST and (Config.AUTOPOST.lower() != "false")):
-        catub.add_event_handler(autopost_func, events.NewMessage())
+        catub.add_event_handler(autopost_func, events.NewMessage(incoming=True))
