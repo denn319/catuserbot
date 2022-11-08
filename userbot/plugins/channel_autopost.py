@@ -31,8 +31,6 @@ async def autopost_func(event):
         return
     sources = sql.get_chat_broadcastlist(keyword_src)
 
-    msg = await event.get_reply_message()
-    LOGS.info(f"Message: {msg}")
     LOGS.info(f"Event: {event}")
 
     source_valid = False
@@ -53,9 +51,8 @@ async def autopost_func(event):
         try:
             if int(event.chat_id) == int(d):
                 continue
-
-            await catub.send_message(int(d), event.message)
-
+                # await catub.send_message(int(d), event.message)
+            await catub.forward_messages(int(d))
             i += 1
         except Exception as e:
             LOGS.info(str(e))
