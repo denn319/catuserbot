@@ -12,6 +12,7 @@ from ..helpers.utils import _format, get_user_from_event
 from ..sql_helper import broadcast_sql as sql
 from . import BOTLOG, BOTLOG_CHATID
 
+from telethon import events
 from ..Config import Config
 
 plugin_category = "tools"
@@ -72,4 +73,4 @@ async def autopost_func(event):
 # check if AUTOPOST config is set
 if Config.AUTOPOST:
     if bool(Config.AUTOPOST and (Config.AUTOPOST.lower() != "false")):
-        catub.add_event_handler(autopost_func)
+        catub.add_event_handler(autopost_func, events.NewMessage())
