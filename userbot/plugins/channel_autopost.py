@@ -2,7 +2,7 @@ import base64
 import contextlib
 from asyncio import sleep
 
-from telethon.tl.functions.messages import ImportChatInviteRequest as Get
+from telethon.tl.functions.messages import *
 from telethon.utils import *
 
 from .. import catub
@@ -30,15 +30,15 @@ async def autopost_func(event):
         return
     sources = sql.get_chat_broadcastlist(keyword_src)
 
-    msg = await get_peer(event)
+    msg = await get_peer_id(event)
     LOGS.info(f"{msg}")
     LOGS.info(f"{event}")
 
     source_valid = False
-    for s in sources:
-        if int(event.chat_id) == int(s):
-            source_valid = True
-    if not source_valid:
+    # for s in sources:
+    #     if int(event.chat_id) == int(s):
+    #         source_valid = True
+    if not sources:  #source_valid:
         return
 
     # get destination
