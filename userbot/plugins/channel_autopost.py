@@ -42,9 +42,10 @@ TEST_CHANNEL_ID = "-1001890495163"
 @catub.on(events.Album)
 async def auto_fwd(e):
     if e.grouped_id:
-        msg_id = get_message_id(e)       
-        catub.forward_messages(TEST_CHANNEL_ID, messages=msg_id, as_album=True)
-        LOGS.info(f"Message: {msg_id}")
+        msg_id = get_message_id(e)
+        await e.forward_to(TEST_CHANNEL_ID)       
+        # catub.forward_messages(TEST_CHANNEL_ID, messages=events.Album)
+        # LOGS.info(f"Message: {msg_id}")
 
 
 async def autopost(event):
