@@ -45,6 +45,8 @@ async def auto_fwd(e):
 
 async def autopost(event):
     """Auto-forward the message to all chats in the 'all' destination category."""
+    
+    LOGS.info(str(event))
 
     # get source channels
     # load channels from the 'source' category
