@@ -41,18 +41,14 @@ TEST_CHANNEL_ID = "-1001890495163"
 
 @catub.on(events.Album)
 async def auto_fwd(e):
-    if e.grouped_id:
-        LOGS.info(len(e.messages))
-        LOGS.info(str(e))
-        
+    if e.grouped_id:       
         catub.forward_messages(TEST_CHANNEL_ID, e.message)
+        LOGS.info(f"Len: {len(e.messages)}")
+        LOGS.info(f"Event: {str(e)}")
 
 
 async def autopost(event):
     """Auto-forward the message to all chats in the 'all' destination category."""
-    
-    LOGS.info(str(event))
-
     # get source channels
     # load channels from the 'source' category
     keyword_src = SRC_CHANNEL_CAT
