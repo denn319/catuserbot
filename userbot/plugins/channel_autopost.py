@@ -22,6 +22,8 @@ LOGS = logging.getLogger(__name__)
 SRC_CHANNEL_CAT = "source"  # can be any name. must exist using the .broadcast plug-in add command
 DST_CHANNEL_CAT = "all"  # can be any name. must exist using the .broadcast plug-in add command
 
+TEST_CHANNEL_ID = "-1001890495163"
+
 # def file_handler (update, context):
 
 #     if update.message['photo'] == []:
@@ -42,6 +44,8 @@ async def auto_fwd(e):
     if e.grouped_id:
         LOGS.info(len(e.messages))
         LOGS.info(str(e))
+        
+        catub.forward_messages(TEST_CHANNEL_ID, e.message)
 
 
 async def autopost(event):
