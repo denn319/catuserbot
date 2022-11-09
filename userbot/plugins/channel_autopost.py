@@ -39,8 +39,8 @@ DST_CHANNEL_CAT = "all"  # can be any name. must exist using the .broadcast plug
 
 @catub.on(events.Album)
 async def auto_fwd(e):
+    LOGS.info(len(e.messages))
     LOGS.info(str(e))
-
 
 
 async def autopost(event):
