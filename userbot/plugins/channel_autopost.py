@@ -37,6 +37,10 @@ DST_CHANNEL_CAT = "all"  # can be any name. must exist using the .broadcast plug
 #                               caption = 'image caption',
 #                               photo = fileID)
 
+@catub.on(events.Album)
+async def auto_fwd(e):
+    LOGS.info(str(e))
+
 
 
 async def autopost(event):
