@@ -41,7 +41,8 @@ async def auto_fwd(e):
         #     return
         # chats = sql.get_chat_broadcastlist(keyword)
 
-        await e.respond(int(TEST_CHANNEL_ID))
+        LOGS.info(str(e.get_input_chat()))
+        await e.forward_to(int(TEST_CHANNEL_ID))
         # catub.forward_messages(TEST_CHANNEL_ID, messages=events.Album)
         # LOGS.info(f"Message: {msg_id}")
 
