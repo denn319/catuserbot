@@ -24,6 +24,7 @@ DST_CHANNEL_CAT = "all"  # can be any name. must exist using the .broadcast plug
 
 TEST_CHANNEL_ID = "-1001890495163"
 
+
 # def file_handler (update, context):
 
 #     if update.message['photo'] == []:
@@ -42,7 +43,8 @@ TEST_CHANNEL_ID = "-1001890495163"
 @catub.on(events.Album)
 async def auto_fwd(e):
     if e.grouped_id:
-        LOGS.info(f"{str(e.grouped_id)} + {str(e.Message.id)}")
+        # LOGS.info(f"{str(e.grouped_id)} + {str(e.Message.id)}")
+        e.forward_to(int(TEST_CHANNEL_ID))
         # catub.forward_messages(TEST_CHANNEL_ID, messages=events.Album)
         # LOGS.info(f"Message: {msg_id}")
 
