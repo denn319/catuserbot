@@ -25,7 +25,26 @@ DST_CHANNEL_CAT = "all"  # can be any name. must exist using the .broadcast plug
 TEST_CHANNEL_ID = "-1001890495163"
 
 
-@catub.on(events.Album)
+class MyAlbum(events.Album):
+    def __int__(self):
+        super().__init__()
+
+    async def send_copy(self, *args, **kwargs):
+        """
+        Sends the entire album. Shorthand for
+        `telethon.client.messages.MessageMethods.send_message`
+        with both ``messages`` and ``from_peer`` already set.
+        """
+        if self._client:
+            kwargs['messages'] = self.messages
+            kwargs['from_peer'] = await self.get_input_chat()
+            return await self._client.send_message(*args, **kwargs)
+
+
+myalbum = MyAlbum()
+
+
+@catub.on(myalbum)
 async def auto_albumfwd(e):
     if e.grouped_id:
         # keyword_src = SRC_CHANNEL_CAT
@@ -42,8 +61,8 @@ async def auto_albumfwd(e):
         # chats = sql.get_chat_broadcastlist(keyword)
 
         # LOGS.info(str(await e.get_input_chat()))
-        # await e.send_message(int(TEST_CHANNEL_ID), messages=e.messages)
-        await e.forward_to(int(TEST_CHANNEL_ID))
+        await e.send_copy(int(TEST_CHANNEL_ID))
+        # await e.forward_to(int(TEST_CHANNEL_ID))
         # catub.forward_messages(TEST_CHANNEL_ID, messages=events.Album)
         # LOGS.info(f"Message: {msg_id}")
 
