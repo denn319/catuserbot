@@ -25,26 +25,23 @@ DST_CHANNEL_CAT = "all"  # can be any name. must exist using the .broadcast plug
 TEST_CHANNEL_ID = "-1001890495163"
 
 
-# def file_handler (update, context):
-
-#     if update.message['photo'] == []:
-#         fileID = update.message['document']['file_id']
-#         fileName = update.message['document']['file_name']
-#         context.bot.sendDocument(chat_id = channel_chat_id,
-#                                  caption = 'image caption',
-#                                  document = fileID)
-
-#     else:
-#         fileID = update.message['photo'][-1]['file_id']
-#         context.bot.sendPhoto(chat_id = channel_chat_id,
-#                               caption = 'image caption',
-#                               photo = fileID)
-
 @catub.on(events.Album)
 async def auto_fwd(e):
     if e.grouped_id:
-        # LOGS.info(f"{str(e.grouped_id)} + {str(e.Message.id)}")
-        await e.forward_to(int(TEST_CHANNEL_ID))
+        # keyword_src = SRC_CHANNEL_CAT
+        # no_of_sources = sql.num_broadcastlist_chat(keyword_src)
+        # if no_of_sources == 0:
+        #     return
+        # sources = sql.get_chat_broadcastlist(keyword_src)
+        #
+        # # get destination
+        # keyword = DST_CHANNEL_CAT
+        # no_of_chats = sql.num_broadcastlist_chat(keyword)
+        # if no_of_chats == 0:
+        #     return
+        # chats = sql.get_chat_broadcastlist(keyword)
+
+        await e.respond(int(TEST_CHANNEL_ID))
         # catub.forward_messages(TEST_CHANNEL_ID, messages=events.Album)
         # LOGS.info(f"Message: {msg_id}")
 
