@@ -27,7 +27,7 @@ TEST_CHANNEL_ID = "-1001890495163"
 
 class MyAlbum(events.Album):
     def __int__(self):
-        super().__init__()
+        super().__init__(self)
 
     async def send_copy(self, *args, **kwargs):
         """
@@ -62,7 +62,7 @@ async def auto_albumfwd(e):
 
         # LOGS.info(str(await e.get_input_chat()))
         await e.send_copy(int(TEST_CHANNEL_ID))
-        # await e.forward_to(int(TEST_CHANNEL_ID))
+        await e.forward_to(int(TEST_CHANNEL_ID))
         # catub.forward_messages(TEST_CHANNEL_ID, messages=events.Album)
         # LOGS.info(f"Message: {msg_id}")
 
