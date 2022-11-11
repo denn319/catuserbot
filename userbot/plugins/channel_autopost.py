@@ -26,8 +26,8 @@ TEST_CHANNEL_ID = "-1001890495163"
 
 
 class MyAlbum(events.Album):
-    def __int__(self):
-        super().__init__(self)
+    def __int__(self, event):
+        super().__init__(event)
 
     async def send_copy(self, *args, **kwargs):
         """
