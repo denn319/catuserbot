@@ -3,6 +3,7 @@ import contextlib
 from asyncio import sleep
 
 from telethon.tl.functions.messages import *
+from telethon.tl.types import PeerChannel
 from telethon.utils import *
 
 from .. import catub
@@ -55,7 +56,10 @@ async def auto_albumfwd(e):
         sources = sql.get_chat_broadcastlist(keyword_src)
 
         if len(e.messages) > 1:
-            channel_id = await e.messages[0].get_input_chat()
+            channel_id = e.messages[0].get_input_chat()
+            entity = e.client.get_input_entity(
+                PeerChannel(e.message[0].fwd_from.channel_id)
+            )
 
         LOGS.info(f"Sources: {sources}")
         LOGS.info(f"Channel ID: {channel_id}")
@@ -69,7 +73,6 @@ async def auto_albumfwd(e):
         # chats = sql.get_chat_broadcastlist(keyword)
 
         LOGS.info(str(await e.messages[0].get_input_chat()))
-        LOGS.info(str(int(await e.messages[0].chat_id())))
         # await e.send_message(int(TEST_CHANNEL_ID))
         await e.forward_to(int(TEST_CHANNEL_ID))
 
