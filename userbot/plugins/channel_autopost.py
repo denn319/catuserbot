@@ -48,6 +48,7 @@ myalbum = MyAlbum()
 @catub.on(myalbum)
 async def auto_albumfwd(e):
     channel_id = -100
+    entity = None
     if e.grouped_id:
         keyword_src = SRC_CHANNEL_CAT
         no_of_sources = sql.num_broadcastlist_chat(keyword_src)
@@ -58,11 +59,12 @@ async def auto_albumfwd(e):
         if len(e.messages) > 1:
             channel_id = e.messages[0].get_input_chat()
             entity = e.client.get_input_entity(
-                PeerChannel(e.message[0].fwd_from.channel_id)
+                PeerChannel(e.messages[0].fwd_from.channel_id)
             )
 
         LOGS.info(f"Sources: {sources}")
-        LOGS.info(f"Channel ID: {entity}")
+        LOGS.info(f"Channel ID: {channel_id}")
+        LOGS.info(f"Entity: {entity}")
 
         #
         # # get destination
