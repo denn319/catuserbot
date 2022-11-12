@@ -60,7 +60,7 @@ async def auto_albumfwd(e):
         #     return
         # chats = sql.get_chat_broadcastlist(keyword)
 
-        LOGS.info(e.messages)
+        LOGS.info(e.messages[0])
         # await e.send_message(int(TEST_CHANNEL_ID))
         await e.forward_to(int(TEST_CHANNEL_ID))
         # catub.forward_messages(TEST_CHANNEL_ID, messages=events.Album)
