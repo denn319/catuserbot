@@ -57,9 +57,9 @@ async def auto_albumfwd(e):
         sources = sql.get_chat_broadcastlist(keyword_src)
 
         if len(e.messages) > 1:
-            channel_id = e.messages[0].get_input_chat()
-            entity = e.client.get_input_entity(
-                PeerChannel(e.messages[0].fwd_from.channel_id)
+            channel_id = await e.messages[0].get_input_chat()
+            entity = await e.client.get_input_entity(
+                PeerChannel(await e.messages[0].fwd_from.channel_id())
             )
 
         LOGS.info(f"Sources: {sources}")
