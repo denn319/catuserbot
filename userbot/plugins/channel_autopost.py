@@ -62,7 +62,7 @@ async def auto_albumfwd(e):
             )
 
         LOGS.info(f"Sources: {sources}")
-        LOGS.info(f"Channel ID: {channel_id}")
+        LOGS.info(f"Channel ID: {entity}")
 
         #
         # # get destination
