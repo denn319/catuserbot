@@ -59,7 +59,7 @@ async def auto_albumfwd(e):
         if len(e.messages) > 1:
             channel_id = await e.messages[0].get_input_chat()
             entity = await e.client.get_input_entity(
-                PeerChannel(await e.messages[0].fwd_from.channel_id())
+                PeerChannel(channel_id=channel_id)
             )
 
         LOGS.info(f"Sources: {sources}")
