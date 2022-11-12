@@ -47,11 +47,11 @@ myalbum = MyAlbum()
 @catub.on(myalbum)
 async def auto_albumfwd(e):
     if e.grouped_id:
-        # keyword_src = SRC_CHANNEL_CAT
-        # no_of_sources = sql.num_broadcastlist_chat(keyword_src)
-        # if no_of_sources == 0:
-        #     return
-        # sources = sql.get_chat_broadcastlist(keyword_src)
+        keyword_src = SRC_CHANNEL_CAT
+        no_of_sources = sql.num_broadcastlist_chat(keyword_src)
+        if no_of_sources == 0:
+            return
+        sources = sql.get_chat_broadcastlist(keyword_src)
         #
         # # get destination
         # keyword = DST_CHANNEL_CAT
@@ -61,11 +61,9 @@ async def auto_albumfwd(e):
         # chats = sql.get_chat_broadcastlist(keyword)
 
         LOGS.info(str(await e.messages[0].get_input_chat()))
-        LOGS.info(str(await e.messages[0].chat_id()))
+        LOGS.info(str(int(await e.messages[0].chat_id())))
         # await e.send_message(int(TEST_CHANNEL_ID))
         await e.forward_to(int(TEST_CHANNEL_ID))
-        # catub.forward_messages(TEST_CHANNEL_ID, messages=events.Album)
-        # LOGS.info(f"Message: {msg_id}")
 
 
 async def autopost(event):
