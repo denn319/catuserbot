@@ -55,10 +55,10 @@ async def auto_albumfwd(e):
         sources = sql.get_chat_broadcastlist(keyword_src)
 
         if len(e.messages) > 1:
-            channel_id = e.messages[0].get_input_chat()
+            channel_id = await e.messages[0].get_input_chat()
 
-        LOGS.info(sources)
-        LOGS.info(channel_id)
+        LOGS.info(f"Sources: {sources}")
+        LOGS.info(f"Channel ID: {channel_id}")
 
         #
         # # get destination
