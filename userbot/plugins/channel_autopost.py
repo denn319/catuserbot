@@ -57,7 +57,7 @@ async def auto_albumfwd(e):
         sources = sql.get_chat_broadcastlist(keyword_src)
 
         if len(e.messages) > 0:
-            channel_id = await e.messages[0].get_input_chat()
+            channel_id = await e.messages[0].get_chat()
 
             if channel_id not in sources:
                 return
