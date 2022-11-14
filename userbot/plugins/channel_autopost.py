@@ -58,10 +58,17 @@ async def auto_albumfwd(e):
 
         if len(e.messages) > 0:
             channel_id = await e.messages[0].get_chat()
+
+
+            source_valid = False
+            for s in sources:
+                if int(channel_id) == int(s):
+                    source_valid = True
+            if not source_valid:
+                return
+
             LOGS.info(f"Channel ID: {channel_id}")
             LOGS.info(f"Sources: {sources}")
-            if channel_id not in sources:
-                return
 
         # LOGS.info(f"Entity: {entity}")
 
