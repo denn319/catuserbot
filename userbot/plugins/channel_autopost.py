@@ -50,28 +50,11 @@ async def auto_albumfwd(e):
     channel_id = -100
     entity = None
     if e.grouped_id:
-        keyword_src = SRC_CHANNEL_CAT
-        no_of_sources = sql.num_broadcastlist_chat(keyword_src)
-        if no_of_sources == 0:
-            return
-        sources = sql.get_chat_broadcastlist(keyword_src)
-
-        if len(e.messages) > 0:
-            channel_id = await e.messages[0].get_chat()
-
-
-            source_valid = False
-            for s in sources:
-                if int(channel_id) == int(s):
-                    source_valid = True
-            if not source_valid:
-                return
-
-            LOGS.info(f"Channel ID: {channel_id}")
-            LOGS.info(f"Sources: {sources}")
-
-        # LOGS.info(f"Entity: {entity}")
-
+        # keyword_src = SRC_CHANNEL_CAT
+        # no_of_sources = sql.num_broadcastlist_chat(keyword_src)
+        # if no_of_sources == 0:
+        #     return
+        # sources = sql.get_chat_broadcastlist(keyword_src)
         #
         # # get destination
         # keyword = DST_CHANNEL_CAT
@@ -80,7 +63,8 @@ async def auto_albumfwd(e):
         #     return
         # chats = sql.get_chat_broadcastlist(keyword)
 
-        # await e.send_message(int(TEST_CHANNEL_ID))
+        # LOGS.info(str(await e.get_input_chat()))
+        await e.send_copy(int(TEST_CHANNEL_ID))
         await e.forward_to(int(TEST_CHANNEL_ID))
 
 
